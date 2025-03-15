@@ -64,3 +64,78 @@
 #   selector:
 #     app: serviceadmin
 #   type: NodePort  
+
+
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: serviceuser
+    version: "1.0"
+  name: serviceuser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serviceuser
+  template:
+    metadata:
+      labels:
+        app: serviceuser
+    spec:
+      containers:
+        - name: serviceuser
+          image: boualem775/servicerental:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_URI
+            - name: PORT
+              value: "8081"
+
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cloudinary-secret
+                  key: CLOUDINARY_CLOUD_NAME
+            - name: CLOUDINARY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudinary-secret
+                  key: CLOUDINARY_API_KEY
+            - name: CLOUDINARY_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: cloudinary-secret
+                  key: CLOUDINARY_API_SECRET
+          resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: serviceuser
+  name: serviceuser
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8081
+      name: http
+  selector:
+    app: serviceuser
+  type: NodePort
+
+
+
+
+  

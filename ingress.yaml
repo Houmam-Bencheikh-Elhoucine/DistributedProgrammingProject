@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-gateway
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2  # This rewrites /admin/cars -> /cars
+spec:
+  rules:
+  - host: rental.local
+    http:
+      paths:
+      - path: /admin(/|$)(.*)  # Match all routes under /admin/
+        pathType: Prefix
+        backend:
+          service:
+            name: serviceadmin
+            port:
+              number: 80
+      - path: /user(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: serviceuser
+            port:
+              number: 80
