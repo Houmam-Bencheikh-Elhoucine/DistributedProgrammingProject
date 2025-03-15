@@ -3,13 +3,14 @@ kind: Ingress
 metadata:
   name: app-gateway
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2  # This rewrites /admin/cars -> /cars
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m  # Increase to 50MB (or more if needed)
 spec:
   rules:
   - host: rental.local
     http:
       paths:
-      - path: /admin(/|$)(.*)  # Match all routes under /admin/
+      - path: /admin(/|$)(.*)
         pathType: Prefix
         backend:
           service:

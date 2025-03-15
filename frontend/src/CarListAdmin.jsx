@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CarList.css'; // Import the CSS for styling
+import './CarList.css'; 
 import { Link } from 'react-router-dom';
 const CarListAdmin = () => {
   const [cars, setCars] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch car data (you can replace this with your actual fetch request)
   const fetchCars = async () => {
     try {
-      const response = await fetch('http://localhost:8080/cars'); // Adjust the URL if needed
+      const response = await fetch('http://rental.local/admin/cars'); 
       const carData = await response.json();
       setCars(carData);
     } catch (error) {
@@ -24,13 +23,11 @@ const CarListAdmin = () => {
   const handleDelete = async (car) => {
     if (window.confirm(`Are you sure you want to delete the ${car.make} ${car.model}?`)) {
       try {
-        // Sending DELETE request to the backend
-        const response = await fetch(`http://localhost:8080/cars/${car._id}`, {
+        const response = await fetch(`http://rental.local/admin/cars/${car._id}`, {
           method: 'DELETE',
         });
   
         if (response.ok) {
-          // If successful, remove the car from the list in the frontend
           setCars(cars.filter((c) => c._id !== car._id));
           alert("Car deleted successfully");
         } else {
@@ -46,7 +43,7 @@ const CarListAdmin = () => {
   
 
   useEffect(() => {
-    fetchCars(); // Fetch car data when the component mounts
+    fetchCars(); 
   }, []);
   return (
     
@@ -58,7 +55,6 @@ const CarListAdmin = () => {
         {cars.map((car) => (
           <div key={car._id} className={`car-card ${car.status.toLowerCase()}`}>
             <div className="car-image-container">
-              {/* Use the first image in the 'images' array */}
               <img src={car.images[0]} alt={`${car.make} ${car.model}`} className="car-image" />
               <div className={`car-status-overlay ${car.status.toLowerCase()}`}>
                 <span>{car.status}</span>

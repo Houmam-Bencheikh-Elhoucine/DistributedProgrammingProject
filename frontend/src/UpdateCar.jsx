@@ -18,9 +18,8 @@ const UpdateCar = () => {
   const handleUpdateCar = async (e) => {
     e.preventDefault();
 
-    // Send PUT request to update the car data on the server
     try {
-      const response = await fetch(`http://localhost:8080/cars/${car._id}`, {
+      const response = await fetch(`http://rental.local/admin/cars/${car._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -31,7 +30,7 @@ const UpdateCar = () => {
       if (response.ok) {
         const updatedCar = await response.json();
         alert('Car updated successfully');
-        navigate('/');  // Navigate back to the car list page after update
+        navigate('/');  
       } else {
         const result = await response.json();
         alert(`Error: ${result.error}`);

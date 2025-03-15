@@ -29,10 +29,8 @@ function RentalRegistrationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Create a new FormData object (renamed to avoid conflict)
     const newFormData = new FormData();
   
-    // Append car details to FormData
     newFormData.append('fname', formData.fname)
     newFormData.append('lname', formData.lname)
     newFormData.append('bdate', formData.bdate)
@@ -41,9 +39,8 @@ function RentalRegistrationForm() {
     newFormData.append("edate", formData.edate)
     newFormData.append("national_id", formData.national_id)
     console.log(newFormData)
-    // Send the FormData to the backend (POST request)
     try {
-      const response = await fetch(`http://localhost:3000/rentals/`, {
+      const response = await fetch(`http://rental.local/user/rentals/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +52,6 @@ function RentalRegistrationForm() {
       if (response.ok) {
         alert('Rented successfully');
         console.log('Rent registered:', result);
-        // You can reset the form or show a success message here
       } else {
         alert(result)
         console.log('Error:', result);

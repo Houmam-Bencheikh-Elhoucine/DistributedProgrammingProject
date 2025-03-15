@@ -13,7 +13,7 @@ function RentalRegistrationForm() {
     doors: '',
     price: '',
     status: '',
-    image: null,  // New field for storing the uploaded image
+    image: null,  
   });
 
   const handleChange = (e) => {
@@ -27,10 +27,8 @@ function RentalRegistrationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Create a new FormData object (renamed to avoid conflict)
     const newFormData = new FormData();
   
-    // Append car details to FormData
     newFormData.append('make', formData.make);
     newFormData.append('model', formData.model);
     newFormData.append('year', formData.year);
@@ -42,14 +40,12 @@ function RentalRegistrationForm() {
     newFormData.append('price', formData.price);
     newFormData.append('status', formData.status);
   
-    // Append the image to FormData
     if (formData.image) {
       newFormData.append('image', formData.image);
     }
   
-    // Send the FormData to the backend (POST request)
     try {
-      const response = await fetch('http://localhost:8080/cars', {
+      const response = await fetch('http://rental.local/admin/cars', {
         method: 'POST',
         body: newFormData,
       });
@@ -58,7 +54,6 @@ function RentalRegistrationForm() {
       if (response.ok) {
         alert('Car registred successfully');
         console.log('Car registered:', result);
-        // You can reset the form or show a success message here
       } else {
         console.log('Error:', result.error);
       }

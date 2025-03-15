@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CarList.css'; // Import the CSS for styling
+import './CarList.css'; 
 
 const CarList = () => {
   const [cars, setCars] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch car data (you can replace this with your actual fetch request)
   const fetchCars = async () => {
     try {
-      const response = await fetch('http://localhost:8080/cars'); // Adjust the URL if needed
+      const response = await fetch('http://rental.local/admin/cars');
       const carData = await response.json();
       setCars(carData);
     } catch (error) {
@@ -20,7 +19,7 @@ const CarList = () => {
   
 
   useEffect(() => {
-    fetchCars(); // Fetch car data when the component mounts
+    fetchCars(); 
   }, []);
   const handleRent = (car) => {
     navigate(`/rent/${car._id}`, { state: car }
@@ -28,15 +27,14 @@ const CarList = () => {
   }
   const handleReturn = async (car)=>{
     try {
-      const response = await fetch(`http://localhost:3000/return/${car._id}`, {
+      const response = await fetch(`http://rental.local/user/return/${car._id}`, {
         method: 'PUT',
       });
-  
+      
       const result = await response.json();
       if (response.ok) {
         alert('Returned successfully');
         await fetchCars()
-        // You can reset the form or show a success message here
       } else {
         alert("Error")
         console.log('Error:', result);
@@ -53,7 +51,6 @@ const CarList = () => {
         {cars.map((car) => (
           <div key={car._id} className={`car-card ${car.status.toLowerCase()}`}>
             <div className="car-image-container">
-              {/* Use the first image in the 'images' array */}
               <img src={car.images[0]} alt={`${car.make} ${car.model}`} className="car-image" />
               <div className={`car-status-overlay ${car.status.toLowerCase()}`}>
                 <span>{car.status}</span>
