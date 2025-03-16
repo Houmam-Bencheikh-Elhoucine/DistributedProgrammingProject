@@ -5,7 +5,7 @@
 This project is a university assignment of creating a web application with at least two services and a database, and the services communicate through REST API, each one is deployed in a docker container and Kubernetes.
 
 
-### 1. Start Minikube
+# 1. Start Minikube
 ```sh
 minikube start
 
@@ -65,7 +65,7 @@ To check the ingress:
 kubectl get ingress
 ```
 
-# start the frontend
+# 5. Start the frontend
 ```sh
 cd frontend
 npm i
