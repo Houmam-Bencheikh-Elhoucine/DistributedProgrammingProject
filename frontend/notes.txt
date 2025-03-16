@@ -1,0 +1,10 @@
+make (ford,toyota,mercedesetc...)
+model (corola,mustang...)
+year
+color 
+fuel type (electric,diesel etc...)
+transmission (manual, auto )
+seats (the number of seats)
+doors (the number of doors )
+price 
+status (rented or none)

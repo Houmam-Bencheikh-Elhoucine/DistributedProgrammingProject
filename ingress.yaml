@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-gateway
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m  # Increase to 50MB (or more if needed)
+spec:
+  rules:
+  - host: rental.local
+    http:
+      paths:
+      - path: /admin(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: serviceadmin
+            port:
+              number: 80
+      - path: /user(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: serviceuser
+            port:
+              number: 80
