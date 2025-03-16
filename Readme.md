@@ -65,6 +65,13 @@ To check the ingress:
 kubectl get ingress
 ```
 
+# start the frontend
+```sh
+cd frontend
+npm i
+npm run dev
+```
+
 # Notes
 - Ensure Minikube is running before applying deployments.
 - Secrets are stored in Kubernetes but should not be exposed in public repositories.
